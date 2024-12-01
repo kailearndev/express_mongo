@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  express-app:
+    build: .
+    container_name: express-app
+    ports:
+      - "8386:8386"
+    environment:
+      MONGO_URL: "mongodb://mongo:27017/mydatabase"
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
+    driver: local
